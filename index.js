@@ -4,20 +4,30 @@ const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 
 let isProduction = process.env.NODE_ENV === 'production';
+let isTest = process.env.NODE_ENV === 'test';
 const PORT = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true } );
+
+if(!isTest){
+  mongoose.connect(keys.mongoURI, { useNewUrlParser: true } );
+}
 
 const app = express();
 app.use(bodyParser.json());
 
-require('./routes/routes')(app);
+require('./models/User');
+require('./services/passport');
+app.use(require('./routes'));
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
+app.use(function(err, req, res, next) {
+  console.log(err);
+  if(!err){
+    var err = new Error('Not Found');
+    err.status = 404;
+  }
+  console.log(err);
   next(err);
 });
 
@@ -53,5 +63,5 @@ if (isProduction) {
 }
 
 app.listen(PORT, function() {
-  console.log('server running....2')
+  console.log('server running....')
 });
