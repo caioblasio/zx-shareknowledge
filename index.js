@@ -20,41 +20,25 @@ require('./models/User');
 require('./services/passport');
 app.use(require('./routes'));
 
-/// catch 404 and forward to error handler
-app.use(function(err, req, res, next) {
-  console.log(err);
-  if(!err){
-    var err = new Error('Not Found');
-    err.status = 404;
-  }
-  console.log(err);
-  next(err);
-});
-
-
-// development error handler
-// will print stacktrace
+// development error handler will print stacktrace
 if (!isProduction) {
   app.use(function(err, req, res, next) {
     console.log(err.stack);
-
     res.status(err.status || 500);
-
-    res.json({'errors': {
-      message: err.message,
+    delete err.status;
+    res.json({
       error: err
-    }});
+    });
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// production error handler no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.json({'errors': {
-    message: err.message,
-    error: {}
-  }});
+  delete err.status;
+  res.json({
+    error: err
+  });
 });
 
 

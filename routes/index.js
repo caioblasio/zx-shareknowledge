@@ -1,6 +1,15 @@
 const router = require('express').Router();
 
 router.use('/api/users', require('./user'));
-router.use('*', (req, res, next) => {console.log('oi'); return next();})
+
+// catch 404 and forward to error handler
+router.use('*', (req, res, next) => {
+  let err = {
+    status: 404,
+    message: 'Page Not Found',
+    code: 1000
+  }
+  next(err);
+})
 
 module.exports = router;

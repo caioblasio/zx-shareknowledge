@@ -18,12 +18,17 @@ router.post('/login', (req, res, next) => {
     if(err){ return next(err); }
     
     if(user){
+
       return res.json({user: user.toAuthJSON()});
+      
     } else {
-      return res.status(422).json(info);
-      // let err = new Error(info.errors);
-      // err.status = 432;
-      // next(err);
+
+      let err = {
+        status: 422,
+        code: 1001,
+        message: info.errors
+      }
+      next(err);
     }
 
   })(req, res, next);
