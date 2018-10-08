@@ -49,3 +49,5 @@ if (isProduction) {
 app.listen(PORT, function() {
   console.log('server running....')
 });
+
+module.exports = app;
