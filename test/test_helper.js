@@ -10,9 +10,9 @@ before(() => {
 });
 
 
-after((done) => {
-    const { users } = mongoose.connection.collections;
-    users.drop(() => {
-        done();
-    })
-})
+// after((done) => {
+//     const { users } = mongoose.connection.collections;
+//     users.drop(() => {
+//         done();
+//     })
+// })

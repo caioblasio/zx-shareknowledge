@@ -23,7 +23,7 @@ app.use(require('./routes'));
 // development error handler will print stacktrace
 if (!isProduction) {
   app.use(function(err, req, res, next) {
-    console.log(err.stack);
+    //console.log(err.stack);
     res.status(err.status || 500);
     delete err.status;
     res.json({

@@ -3,15 +3,29 @@ const passport = require('passport');
 const User = mongoose.model('User');
 
 exports.index = (req, res, next) => {
-    var user = new User();
+    let user = new User();
 
     user.username = req.body.user.username;
     user.email = req.body.user.email;
     user.setPassword(req.body.user.password);
 
-    user.save().then(function(){
+    user.save().then(function() {
+    
         return res.json({user: user.toAuthJSON()});
-    }).catch(next);
+    }).catch(function(err) {
+
+        let errors = {};
+
+        for(let errorName in err.errors) {
+            errors[errorName] = err.errors[errorName].message
+        }
+
+        next({
+            status: 409,
+            code: 1002,
+            message: errors
+        });
+    });
     
 }
 
