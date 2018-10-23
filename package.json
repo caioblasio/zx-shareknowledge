@@ -4,7 +4,7 @@
   "description": "Knowledge Share Tool for ZX Ventures",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha --exit",
     "start": "node index.js",
     "dev": "pm2 start index.js --no-daemon --watch"
   },

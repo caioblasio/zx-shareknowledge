@@ -9,15 +9,14 @@ exports.index = (req, res, next) => {
     user.email = req.body.user.email;
     user.setPassword(req.body.user.password);
 
-    user.save().then(function() {
-    
+    user.save().then(() => {
         return res.json({user: user.toAuthJSON()});
     }).catch(function(err) {
 
         let errors = {};
 
         for(let errorName in err.errors) {
-            errors[errorName] = err.errors[errorName].message
+            errors[errorName] = err.errors[errorName].message;
         }
 
         next({
