@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../index');
+const testData = require('./global');
 
 before(() => {
     mongoose.connect('mongodb://localhost/test_zx-shareknowledge',  {useNewUrlParser: true });
@@ -12,18 +13,20 @@ before(() => {
 });
 
 beforeEach((done) => {
-   return request(app)
+   request(app)
    .post('/api/users')
    .send({user: testData.user})
    .end((err, response) => {
         testData.user.token = response.body.user.token;
+        done();
    });
 });
 
 afterEach((done) => {
     const { users } = mongoose.connection.collections;
-    return users.drop(() => {
+    users.drop(() => {
         testData.user.token = null;
+        done();
     });
 });
 

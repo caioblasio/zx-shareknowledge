@@ -1,4 +1,4 @@
-testData = {
+ const testData =  {
     user: {
         email: 'test@test.com', 
         username: 'test', 
@@ -6,3 +6,5 @@ testData = {
         token: null
     }
 };
+
+module.exports = testData;
