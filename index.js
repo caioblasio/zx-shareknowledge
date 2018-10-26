@@ -17,6 +17,8 @@ const app = express();
 app.use(bodyParser.json());
 
 require('./models/User');
+require('./models/Category');
+require('./models/Book');
 require('./services/passport');
 app.use(require('./routes'));
 

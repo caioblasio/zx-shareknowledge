@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const User = mongoose.model('User');
 
-exports.index = (req, res, next) => {
+exports.register = (req, res, next) => {
     let user = new User();
 
     user.username = req.body.user.username;
