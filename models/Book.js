@@ -13,7 +13,7 @@ let BookSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now },
 });
 
-CategorySchema.methods.toJSON = function(){
+BookSchema.methods.toJSON = function(){
   return {
     id: this._id,
     title: this.name,

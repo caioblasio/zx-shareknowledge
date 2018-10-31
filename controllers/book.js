@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Book = mongoose.model('Book');
+const Category = mongoose.model('Category');
+
 
 exports.create = (req, res, next) => {
 
@@ -8,11 +10,21 @@ exports.create = (req, res, next) => {
   book.title = req.body.book.title;
   book.subtitle = req.body.book.subtitle;
   book.authors = req.body.book.authors;
-  book.category = req.body.book.category;
+  
   book.description = req.body.book.description;
   book.pageCount = req.body.book.pageCount;
   book.imageLink = req.body.book.imageLink;
   book.averageRating = req.body.book.averageRating;
+
+  //book.category = req.body.book.category;
+
+  Category.findOne({
+    'name': req.body.book.category
+  }).then(category => {
+    book.category = category.id;
+    console.log(category)
+  });
+
 
   book.save().then(() => {
       return res.json(book.toJSON());
@@ -30,12 +42,10 @@ exports.create = (req, res, next) => {
           message: errors
       });
   });
-}
+};
 
 exports.getAll = (req, res, next) => {
   Category.find().then((categories) => {
-    
     return res.json(categories.map(category => category.toJSON()));
-
   }).catch(next);
 }

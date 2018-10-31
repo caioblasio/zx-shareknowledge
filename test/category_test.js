@@ -15,7 +15,7 @@ describe('Category', () => {
       .post('/api/categories')
       .send({ category: testCategory })
       .end((err, response) => {
-        _category.statusCode = response.statusCode
+        _category.statusCode = response.statusCode;
         done();
       });
   });
@@ -26,7 +26,6 @@ describe('Category', () => {
         assert(category != null);
         assert(category[0].name === testCategory.name);
         assert(_category.statusCode === 200);
-        console.log('Creates', category);
         done();
       })
   });
