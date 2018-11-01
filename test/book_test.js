@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const app = require('../index');
 const Book = mongoose.model('Book');
 
+const testCategory = require('./global').category;
 const testBook = require('./global').book;
 
 describe('Book', () => {
@@ -12,12 +13,18 @@ describe('Book', () => {
 
   beforeEach((done) => {
     request(app)
-      .post('/api/books')
-      .send({ book: testBook })
-      .end((err, response) => {
-        _book.statusCode = response.statusCode;
-       // console.log(response)
-        done();
+      .post('/api/categories')
+      .send({ category: testCategory })
+      .end(() => {
+        request(app)
+        .post('/api/books')
+        .send({ book: testBook })
+        .end((err, response) => {
+          _book.statusCode = response.statusCode;
+          _book.id = response.body.book.id;
+          done();
+        });
+
       });
   });
 
@@ -25,19 +32,27 @@ describe('Book', () => {
     Book.find({ title: testBook.title })
       .then(book => {
         assert(book != null);
-       // console.log(book);
+        assert(_book.statusCode === 200)
         done();
       });
   });
 
-  // it('Gets a category', done => {
-  //   request(app)
-  //   .get('/api/categories')
-  //   .end((err, response) => {
-  //       assert(response.body[0].name === testCategory.name);
-  //       assert(response.statusCode === 200);
-  //       done();
-  //   });
-  // });
+  it('Gets a book', done => {
+    request(app)
+        .get(`/api/books/${_book.id}`)
+        .end((err, response) => {
+          assert(response.body.book.id === _book.id)
+          done();
+        });
+  });
+
+  it('Gets all books', done => {
+    request(app)
+        .get('/api/books')
+        .end((err, response) => {
+          assert(response.body[0].id === _book.id)
+          done();
+        });
+  });
 
 });

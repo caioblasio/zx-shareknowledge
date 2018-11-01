@@ -12,7 +12,7 @@ const testData =  {
 		title: 'Book Title',
 		subtitle: 'Book Subtitle',
 		authors: 'Book Authors',
-		category: 'Book Category',
+		category: 'Test Category',
 		description: 'Book Description',
 		pageCount: 300,
 		imageLink: 'http://bookimage.com',

@@ -24,10 +24,12 @@ beforeEach((done) => {
 
 afterEach((done) => {
     testData.user.token = null;
-    const { users, categories } = mongoose.connection.collections;
+    const { users, categories, books } = mongoose.connection.collections;
     users.drop(() => {
         categories.drop(() => {
-            done();
+            books.drop(() => {
+                done();
+            })
         })
     });
 });

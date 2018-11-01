@@ -5,7 +5,7 @@ let BookSchema = new mongoose.Schema({
   title: {type: String, required: true, index: true},
   subtitle: String,
   authors: {type: [String], required: true},
-  category: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+  category: { type: Schema.Types.ObjectId, ref: 'Category' },
   description: String,
   pageCount: String,
   imageLink: String,

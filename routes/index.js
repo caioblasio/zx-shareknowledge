@@ -15,6 +15,8 @@ router.get('/api/categories', category_controller.getAll);
 
 //Books
 router.post('/api/books', book_controller.create);
+router.get('/api/books', book_controller.getAll);
+router.get('/api/books/:bookId', book_controller.getBook);
 
 // catch 404 and forward to error handler
 router.use('*', (req, res, next) => {
